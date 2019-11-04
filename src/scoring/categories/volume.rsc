@@ -1,5 +1,12 @@
 module scoring::categories::volume
 
+import IO;
+import String;
+import Set;
+import List;
+import Map;
+import util::Math;
+
 import scoring::ranks;
 
 

@@ -2,10 +2,16 @@ module utility
 
 import IO;
 import String;
+import Set;
+import List;
+import Map;
+import util::Math;
 import lang::java::m3::Core;
 import lang::java::m3::AST;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
+
+import scoring::ranks;
 
 
 M3 createM3Model(loc projectLocation) {
@@ -31,4 +37,12 @@ list[Declaration] retrieveAst(M3 model) {
 str fillUp(str string, int amount) {
 	for (_ <- [0..(amount - size(string))]) string += " ";
 	return string;
+}
+
+str fillUp(int score, int amount) {
+	return fillUp(toString(score), amount);
+}
+
+str fillUp(Rank rank, int amount) {
+	return fillUp(convertRankToLiteral(rank), amount);
 }
