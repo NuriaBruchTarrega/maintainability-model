@@ -24,10 +24,10 @@ import scoring::categories::volume;
 // list[Declaration] smallsql = retrieveAst(|project://smallsql0.21_src|);
 // list[Declaration] hsqldb = retrieveAst(|project://hsqldb-2.3.1|);
 
-tuple[int, Rank] calculatVolumeMetric(list[Declaration] ast) {
+tuple[int, str] calculatVolumeMetric(list[Declaration] ast) {
 	int volume = calculateVolume(ast);
 	Rank rank = calculateVolumeRank(volume);
-	return <volume, rank>;
+	return <volume, convertRankToLiteral(rank)>;
 }
 
 void calculate(list[Declaration] ast) {
