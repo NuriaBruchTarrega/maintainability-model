@@ -1,6 +1,7 @@
-module calculation::helpers
+module utility
 
 import IO;
+import String;
 import lang::java::m3::Core;
 import lang::java::m3::AST;
 import lang::java::jdt::m3::Core;
@@ -25,4 +26,9 @@ list[Declaration] retrieveAst(M3 model) {
 		ast += createAstFromFile(m[0], true);
 	}
 	return ast;
+}
+
+str fillUp(str string, int amount) {
+	for (_ <- [0..(amount - size(string))]) string += " ";
+	return string;
 }
