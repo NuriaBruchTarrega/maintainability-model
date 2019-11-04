@@ -1,1 +1,1 @@
-module scoring::unitcomplexity
+module scoring::categories::unitcomplexity

@@ -1,6 +1,6 @@
-module scoring::volume
+module scoring::categories::volume
 
-import scoring::ranks::Rank;
+import scoring::ranks;
 
 
 // These bounds are taken from page 34 of the SIG model report

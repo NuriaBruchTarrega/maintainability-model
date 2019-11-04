@@ -15,10 +15,10 @@ import lang::java::jdt::m3::AST;
 import calculation::helpers;
 import calculation::categories::volume;
 import scoring::ranks;
-import scoring::duplication;
-import scoring::unitcomplexity;
-import scoring::unitsize;
-import scoring::volume;
+import scoring::categories::duplication;
+import scoring::categories::unitcomplexity;
+import scoring::categories::unitsize;
+import scoring::categories::volume;
 
 
 // list[Declaration] smallsql = retrieveAst(|project://smallsql0.21_src|);
@@ -26,7 +26,7 @@ import scoring::volume;
 
 tuple[int, Rank] calculatVolumeMetric(list[Declaration] ast) {
 	int volume = calculateVolume(ast);
-	int rank = calculateVolumeRank(volume);
+	Rank rank = calculateVolumeRank(volume);
 	return <volume, rank>;
 }
 

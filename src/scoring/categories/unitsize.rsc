@@ -1,1 +1,1 @@
-module scoring::unitsize
+module scoring::categories::unitsize

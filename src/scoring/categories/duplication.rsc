@@ -1,1 +1,1 @@
-module scoring::duplication
+module scoring::categories::duplication
