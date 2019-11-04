@@ -21,15 +21,30 @@ import scoring::categories::unitsize;
 import scoring::categories::volume;
 
 
-// list[Declaration] smallsql = retrieveAst(|project://smallsql0.21_src|);
-// list[Declaration] hsqldb = retrieveAst(|project://hsqldb-2.3.1|);
+// Example projects
+loc smallsql = |project://smallsql0.21_src|;
+loc hsqldb = |project://hsqldb-2.3.1|;
 
-tuple[int, str] calculatVolumeMetric(list[Declaration] ast) {
-	int volume = calculateVolume(ast);
+// Category calculation functions
+tuple[int, str] calculatVolumeMetric(map[loc, list[str]] files) {
+	int volume = calculateVolume(files);
 	Rank rank = calculateVolumeRank(volume);
 	return <volume, convertRankToLiteral(rank)>;
 }
 
-void calculate(list[Declaration] ast) {
-	println("Volume Rank: <calculatVolumeMetric(ast)>");
+// Main function
+void calculate(list[loc] projectLocations) {
+	for (projectLocation <- projectLocations) {
+		M3 projectModel = createM3Model(projectLocation);
+		map[loc locations, list[str] lines] files = retrieveProjectFiles(projectModel);
+		list[Declaration] ast = retrieveAst(projectModel);
+		
+		println("******************************");
+		println("Project: <projectLocation.authority>");
+		// println("Duplication Rank: <>");
+		// println("Unit Complexity Rank: <>");
+		// println("Unit Size: <>");
+		println("Volume Rank: <calculatVolumeMetric(files)>");
+		println("******************************\n");
+	}
 }
