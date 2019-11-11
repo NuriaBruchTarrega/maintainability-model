@@ -7,6 +7,7 @@ import List;
 import Map;
 import util::Math;
 
+import scoring::ranks;
 import scoring::risklevels;
 
 
@@ -20,7 +21,7 @@ tuple[int moderate, int high, int veryHigh] MINUS_BOUNDS 		= <50, 15, 5>;
 	Parameters:
 	- tuple[int moderate, int high, int veryHigh] complexity: Percentage of LOC with moderate, high and very high risk levels.
 }
-tuple[tuple [int, int, int], Rank] calculateUnitComplexityRank (tuple[int moderate, int high, int veryHigh] complexity) {
+tuple[tuple[int, int, int], Rank] calculateUnitComplexityRank(tuple[int moderate, int high, int veryHigh] complexity) {
 	if (complexity.moderate > MINUS_BOUNDS.moderate || complexity.high > MINUS_BOUNDS.high || complexity.veryHigh > MINUS_BOUNDS.veryHigh) {
 		return <complexity, \minusminus()>;
 	} else if (complexity.moderate > NEUTRAL_BOUNDS.moderate || complexity.high > NEUTRAL_BOUNDS.high || complexity.veryHigh > NEUTRAL_BOUNDS.veryHigh) {

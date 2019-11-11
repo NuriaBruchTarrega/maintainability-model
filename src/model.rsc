@@ -22,7 +22,7 @@ import utility;
 
 
 // Constants
-int SCORE_FILL_UP_AMOUNT = 10;
+int SCORE_FILL_UP_AMOUNT = 15;
 int RANK_FILL_UP_AMOUNT = 5;
 
 // Example projects
@@ -39,30 +39,30 @@ void calculate(list[loc] projectLocations) {
 		map[loc locations, list[str] lines] files = retrieveProjectFiles(projectModel);
 		list[Declaration] ast = retrieveAst(projectModel);
 		
-		volume = calculateVolumeMetric(files);		
-		unitComplexity = <"TBD", \tbd()>;
+		volume = calculateVolumeMetric(files);	
+		unitComplexity = calculateUnitComplexityMetric(ast, volume[0]);
 		duplication = <"TBD", \tbd()>;
-		unitSize = calculateUnitSizeMetric(files);
+		unitSize = calculateUnitSizeMetric(ast);
 		
 		println("
-			'******************************************
+			'************************************************
 			'Project: <projectLocation.authority>
 			'
-			'----------------------------------------
+			'---------------------------------------------
 			'| Category        | <fillUp("Score", SCORE_FILL_UP_AMOUNT)> | <fillUp("Rank", RANK_FILL_UP_AMOUNT)> |
-			'|---------------------------------------
+			'|--------------------------------------------
 			'| Volume          | <fillUp(volume[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(volume[1], RANK_FILL_UP_AMOUNT)> |
 			'| Unit Complexity | <fillUp(unitComplexity[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(unitComplexity[1], RANK_FILL_UP_AMOUNT)> |
 			'| Duplication     | <fillUp(duplication[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(duplication[1], RANK_FILL_UP_AMOUNT)> |
 			'| Unit Size       | <fillUp(unitSize[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(unitSize[1], RANK_FILL_UP_AMOUNT)> |
-			'----------------------------------------
+			'---------------------------------------------
 			'
 			'Average Rank: <convertRankToLiteral(calculateAverageRank([volume[1], unitComplexity[1], duplication[1], unitSize[1]]))>
-			'******************************************
+			'************************************************
 		");
 	}
 }
 
 void main() {
-	calculate([smallsql]);
+	calculate(projects);
 }
