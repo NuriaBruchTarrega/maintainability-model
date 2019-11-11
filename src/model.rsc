@@ -42,7 +42,7 @@ void calculate(list[loc] projectLocations) {
 		volume = calculateVolumeMetric(files);		
 		unitComplexity = <"TBD", \tbd()>;
 		duplication = <"TBD", \tbd()>;
-		unitSize = <"TBD", \tbd()>;
+		unitSize = calculateUnitSizeMetric(files);
 		
 		println("
 			'******************************************
@@ -64,5 +64,5 @@ void calculate(list[loc] projectLocations) {
 }
 
 void main() {
-	calculate(projects);
+	calculate([smallsql]);
 }

@@ -5,6 +5,7 @@ import String;
 import Set;
 import List;
 import Map;
+import Tuple;
 import util::Math;
 import lang::java::m3::Core;
 import lang::java::m3::AST;
@@ -43,6 +44,10 @@ str fillUp(int score, int amount) {
 	return fillUp(toString(score), amount);
 }
 
+str fillUp(tuple[int moderate, int high, int veryhigh] risks, int amount) {
+	return fillUp("<risks.moderate> - <risks.high> - <risks.veryhigh>", amount);
+}
+
 str fillUp(Rank rank, int amount) {
 	return fillUp(convertRankToLiteral(rank), amount);
 }
@@ -51,4 +56,8 @@ str joinString(list[str] listOfStrings) {
 	str joined = "";
 	for (item <- listOfStrings) joined += item;
 	return joined;
+}
+
+int countOccurrences(str string, str match) {
+	return size(findAll(string, match));
 }

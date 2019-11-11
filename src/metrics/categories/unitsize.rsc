@@ -11,6 +11,7 @@ import lang::java::m3::AST;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
+import utility;
 import metrics::utility;
 
 
@@ -26,10 +27,34 @@ list[tuple[loc, str, int]] calculateUnitSizes(map[loc locations, list[str] _] fi
 			lineIndex += 1;
 		}
 	}
+	return units;
 }
 
-tuple[loc, str, int] constructUnitTriple(loc location, list[str] lines, int lineIndex) {
-	// TODO: Implement this!
+tuple[loc, str, int] constructUnitTriple(loc location, list[str] lines, int unitDeclarationLineIndex) {
+	// TODO: calc method location
+	list[str] unitBody = sliceOutUnitBody(lines, unitDeclarationLineIndex);
+	return <location, joinString(unitBody), size(unitBody)>;
+}
+
+list[str] sliceOutUnitBody(list[str] lines, int unitDeclarationLineIndex) {
+	str unitDeclarationLine = lines[unitDeclarationLineIndex];
+	list[str] linesAfterUnitDeclarationExclusive = slice(lines, unitDeclarationLineIndex + 1, (size(lines) - unitDeclarationLineIndex - 1));
+	
+	int braceCounter = countOccurrences(unitDeclarationLine, "{");
+	braceCounter -= countOccurrences(unitDeclarationLine, "}");
+	if (braceCounter <= 0) return [unitDeclarationLine];
+	
+	int lineIndex = 0;
+	for (str line <- linesAfterUnitDeclarationExclusive) {
+		braceCounter += countOccurrences(line, "{");
+		braceCounter -= countOccurrences(line, "}");
+		
+		if (braceCounter <= 0) break;
+		
+		lineIndex += 1;
+	}
+	
+	return unitDeclarationLine + slice(linesAfterUnitDeclarationExclusive, 0, lineIndex + 1);
 }
 
 bool isMethodDeclarationLine(str line) {
@@ -48,6 +73,7 @@ bool isMethodDeclarationLine(str line) {
 		if (part == "new") return false;
 		if (part == "return") return false;
 		if (part == "throw") return false;
+		if (part == "abstract") return false;
 		if (contains(part, ".")) return false;
 		if (contains(part, "{")) return false;
 		if (contains(part, "}")) return false;
