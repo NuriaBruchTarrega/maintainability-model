@@ -30,18 +30,26 @@ tuple[int, Rank] calculateVolumeMetric(map[loc, list[str]] files) {
 	return <volume, rank>;
 }
 
-void calculateUnitComplexityMetric(map[loc locations, list[str] lines] files) {
-	list[tuple[str, int, int]] unitComplexities = calculateUnitComplexities(files);
-	//tuple[int, int, int] complexities = calculateTotalUnitComplexity(unitComplexities);
-	//Rank rank = calculateUnitComplexityRank(complexities);
-	//return <complexities, rank>;
+tuple[tuple[int, int, int], Rank] calculateUnitComplexityMetric(list[Declaration] ast, int projectVolume) {
+	list[tuple[loc, int, int]] unitComplexities = calculateUnitComplexities(ast);
+	
+	map[RiskLevel risks, int _] riskLevelLineOfCodeAmount = ();
+	for (tuple[loc location, int linesOfCode, int cyclomaticComplexity] unit <- unitComplexities) {
+		RiskLevel riskLevel = calculateUnitComplexityRisk(unit.cyclomaticComplexity);
+		riskLevelLineOfCodeAmount[riskLevel] ? 0 += unit.linesOfCode;
+	}
+		
+	map[RiskLevel risks, int percentages] riskPercentages = (risk : percent(riskLevelLineOfCodeAmount[risk], projectVolume) | risk <- riskLevelLineOfCodeAmount.risks);
+	tuple[int, int, int] unitSizeRisks = <riskPercentages[\moderate()]?0, riskPercentages[\high()]?0, riskPercentages[\veryhigh()]?0>;
+	
+	return calculateUnitComplexityRank(unitSizeRisks);
 }
 
-tuple[tuple[int, int, int], Rank] calculateUnitSizeMetric(map[loc locations, list[str] lines] files) {
-	list[tuple[loc, str, int]] unitSizes = calculateUnitSizes(files);
+tuple[tuple[int, int, int], Rank] calculateUnitSizeMetric(list[Declaration] ast) {
+	list[tuple[loc, int]] unitSizes = calculateUnitSizes(ast);
 	int amountOfUnits = size(unitSizes);
 	
-	list[RiskLevel] unitSizeRiskLevels = [calculateUnitSizeRisk(unitSize) | <_, _, unitSize> <- unitSizes];
+	list[RiskLevel] unitSizeRiskLevels = [calculateUnitSizeRisk(unitSize) | <_, unitSize> <- unitSizes];
 	map[RiskLevel risks, int occurrences] riskDistribution = distribution(unitSizeRiskLevels);
 	map[RiskLevel risks, int percentages] riskPercentages = (risk : percent(riskDistribution[risk], amountOfUnits) | risk <- riskDistribution.risks);
 	
