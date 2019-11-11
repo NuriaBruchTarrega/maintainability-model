@@ -22,3 +22,7 @@ bool isComment(str line) {
 	trimmed = trim(line);
 	return startsWith(trimmed, "//") || startsWith(trimmed, "/*") || startsWith(trimmed, "*");
 }
+
+list[str] retrieveMethodLines(loc methodLocation) {
+	return [line | line <- readFileLines(methodLocation), !isBlank(line), !isComment(line)];
+}
