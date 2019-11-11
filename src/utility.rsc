@@ -46,3 +46,9 @@ str fillUp(int score, int amount) {
 str fillUp(Rank rank, int amount) {
 	return fillUp(convertRankToLiteral(rank), amount);
 }
+
+str joinString(list[str] listOfStrings) {
+	str joined = "";
+	for (item <- listOfStrings) joined += item;
+	return joined;
+}

@@ -11,6 +11,8 @@ import lang::java::m3::AST;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
+import metrics::utility;
+
 
 int calculateVolume(map[loc locations, list[str] lines] files) {
 	int volume = 0;
@@ -20,15 +22,4 @@ int calculateVolume(map[loc locations, list[str] lines] files) {
 		}
 	}
 	return volume;
-}
-
-bool isBlank(str line) {
-	trimmed = trim(line);
-	return size(trimmed) == 0;
-}
-
-// TODO: Extend this with proper multiline comment detection
-bool isComment(str line) {
-	trimmed = trim(line);
-	return startsWith(trimmed, "//") || startsWith(trimmed, "/*") || startsWith(trimmed, "*");
 }

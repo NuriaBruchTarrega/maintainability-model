@@ -12,6 +12,7 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
 import metrics::calculation;
+import metrics::categories::unitsize;
 import scoring::categories::duplication;
 import scoring::categories::unitcomplexity;
 import scoring::categories::unitsize;
@@ -38,7 +39,7 @@ void calculate(list[loc] projectLocations) {
 		map[loc locations, list[str] lines] files = retrieveProjectFiles(projectModel);
 		list[Declaration] ast = retrieveAst(projectModel);
 		
-		volume = calculateVolumeMetric(files);
+		volume = calculateVolumeMetric(files);		
 		unitComplexity = <"TBD", \tbd()>;
 		duplication = <"TBD", \tbd()>;
 		unitSize = <"TBD", \tbd()>;
