@@ -11,6 +11,7 @@ import lang::java::m3::AST;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
+import aliases;
 import metrics::categories::docstringdensity;
 import metrics::categories::duplication;
 import metrics::categories::unitcomplexity;
@@ -26,7 +27,7 @@ import scoring::risklevels;
 import utility;
 
 
-tuple[int, Rank] calculateVolumeMetric(map[loc, list[str]] files) {
+tuple[int, Rank] calculateVolumeMetric(Files files) {
 	int volume = calculateVolume(files);
 	Rank rank = calculateVolumeRank(volume);
 	return <volume, rank>;
@@ -45,6 +46,10 @@ tuple[tuple[int, int, int], Rank] calculateUnitComplexityMetric(list[Declaration
 	tuple[int, int, int] unitSizeRisks = <riskPercentages[\moderate()]?0, riskPercentages[\high()]?0, riskPercentages[\veryhigh()]?0>;
 	
 	return calculateUnitComplexityRank(unitSizeRisks);
+}
+
+void calculateDuplicationMetric(Files files) {
+	findDuplicates(files);
 }
 
 tuple[tuple[int, int, int], Rank] calculateUnitSizeMetric(list[Declaration] ast) {

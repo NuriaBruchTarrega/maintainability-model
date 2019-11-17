@@ -41,7 +41,7 @@ void calculate(list[loc] projectLocations) {
 		
 		volume = calculateVolumeMetric(files);	
 		unitComplexity = calculateUnitComplexityMetric(ast, volume[0]);
-		duplication = <"TBD", \tbd()>;
+		duplication = calculateDuplicationMetric(files);
 		unitSize = calculateUnitSizeMetric(ast);
 		docstringDensity = calculateDocstringDensityMetric(ast);
 		
