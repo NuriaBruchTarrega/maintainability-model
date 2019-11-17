@@ -17,6 +17,10 @@ data Rank
     | \tbd()
     ;
 
+@doc{
+	Parameters:
+	- Rank rank: A constructed rank type
+}
 Rank calculateAverageRank(list[Rank] ranks) {
 	list[int] rankValues = [];
 	for (rank <- ranks) {

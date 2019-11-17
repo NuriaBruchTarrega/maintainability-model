@@ -11,10 +11,12 @@ import lang::java::m3::AST;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
+import metrics::categories::docstringdensity;
 import metrics::categories::duplication;
 import metrics::categories::unitcomplexity;
 import metrics::categories::unitsize;
 import metrics::categories::volume;
+import scoring::categories::docstringdensity;
 import scoring::categories::duplication;
 import scoring::categories::unitcomplexity;
 import scoring::categories::unitsize;
@@ -56,4 +58,10 @@ tuple[tuple[int, int, int], Rank] calculateUnitSizeMetric(list[Declaration] ast)
 	tuple[int, int, int] unitSizeRisks = <riskPercentages[\moderate()]?0, riskPercentages[\high()]?0, riskPercentages[\veryhigh()]?0>;
 	
 	return calculateUnitSizeRank(unitSizeRisks);
+}
+
+tuple[int, Rank] calculateDocstringDensityMetric(list[Declaration] ast) {
+	int density = calculateDocstringDensity(ast);
+	Rank rank = calculateDocstringDensityRank(density);
+	return <density, rank>;
 }

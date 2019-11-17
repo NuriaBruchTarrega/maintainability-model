@@ -43,22 +43,24 @@ void calculate(list[loc] projectLocations) {
 		unitComplexity = calculateUnitComplexityMetric(ast, volume[0]);
 		duplication = <"TBD", \tbd()>;
 		unitSize = calculateUnitSizeMetric(ast);
+		docstringDensity = calculateDocstringDensityMetric(ast);
 		
 		println("
-			'************************************************
+			'**************************************************
 			'Project: <projectLocation.authority>
 			'
-			'---------------------------------------------
-			'| Category        | <fillUp("Score", SCORE_FILL_UP_AMOUNT)> | <fillUp("Rank", RANK_FILL_UP_AMOUNT)> |
-			'|--------------------------------------------
-			'| Volume          | <fillUp(volume[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(volume[1], RANK_FILL_UP_AMOUNT)> |
-			'| Unit Complexity | <fillUp(unitComplexity[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(unitComplexity[1], RANK_FILL_UP_AMOUNT)> |
-			'| Duplication     | <fillUp(duplication[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(duplication[1], RANK_FILL_UP_AMOUNT)> |
-			'| Unit Size       | <fillUp(unitSize[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(unitSize[1], RANK_FILL_UP_AMOUNT)> |
-			'---------------------------------------------
+			'-----------------------------------------------
+			'| Category          | <fillUp("Score", SCORE_FILL_UP_AMOUNT)> | <fillUp("Rank", RANK_FILL_UP_AMOUNT)> |
+			'-----------------------------------------------
+			'| Volume            | <fillUp(volume[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(volume[1], RANK_FILL_UP_AMOUNT)> |
+			'| Unit Complexity   | <fillUp(unitComplexity[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(unitComplexity[1], RANK_FILL_UP_AMOUNT)> |
+			'| Duplication       | <fillUp(duplication[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(duplication[1], RANK_FILL_UP_AMOUNT)> |
+			'| Unit Size         | <fillUp(unitSize[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(unitSize[1], RANK_FILL_UP_AMOUNT)> |
+			'| Docstring Density | <fillUp(toString(docstringDensity[0]) + "%", SCORE_FILL_UP_AMOUNT)> | <fillUp(docstringDensity[1], RANK_FILL_UP_AMOUNT)> |
+			'-----------------------------------------------
 			'
-			'Average Rank: <convertRankToLiteral(calculateAverageRank([volume[1], unitComplexity[1], duplication[1], unitSize[1]]))>
-			'************************************************
+			'Average Rank: <convertRankToLiteral(calculateAverageRank([volume[1], unitComplexity[1], duplication[1], unitSize[1], docstringDensity[1]]))>
+			'**************************************************
 		");
 	}
 }

@@ -45,7 +45,7 @@ str fillUp(int score, int amount) {
 }
 
 str fillUp(tuple[int moderate, int high, int veryhigh] risks, int amount) {
-	return fillUp("<risks.moderate> - <risks.high> - <risks.veryhigh>", amount);
+	return fillUp("<risks.moderate>% - <risks.high>% - <risks.veryhigh>%", amount);
 }
 
 str fillUp(Rank rank, int amount) {
