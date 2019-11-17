@@ -61,3 +61,7 @@ str joinString(list[str] listOfStrings) {
 int countOccurrences(str string, str match) {
 	return size(findAll(string, match));
 }
+
+@javaClass{org.rascalmpl.library.Prelude}
+public java str md5Hash(str input)
+throws PathNotFound, IO;
