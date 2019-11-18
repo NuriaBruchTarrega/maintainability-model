@@ -123,10 +123,6 @@ map[str, set[tuple[loc, str]]] generateLinesByFile(map[str, set[tuple[loc, str]]
 	return linesByFile;
 }
 
-str getPathFile(loc location) {
-	return location.path + location.file;
-}
-
 loc constructBlockLocation(loc locationPrevious, loc locationPosterior, loc locationCurrent) {
 	locationPrevious.length = locationPrevious.length + locationPosterior.length - locationCurrent.length - 1;
 	locationPrevious.end.line = locationPosterior.end.line;
