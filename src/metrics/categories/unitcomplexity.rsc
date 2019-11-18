@@ -28,6 +28,14 @@ list[tuple[loc, int, int]] calculateUnitComplexities(list[Declaration] ast) {
 	return unitComplexities;
 }
 
+@doc{
+	Parameters:
+	- Statement unit: A unit (i.e. method) of the source code
+	
+	Author: Davy Landman
+	
+	See: https://stackoverflow.com/a/40069656
+}
 int calculateCyclomaticComplexityOfSingleUnit(Statement unit) {
     int cc = 1;
     visit (unit) {

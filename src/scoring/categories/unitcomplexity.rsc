@@ -56,4 +56,3 @@ RiskLevel calculateUnitComplexityRisk(int cyclomaticComplexity) {
 		return \veryhigh();
 	}
 }
-
