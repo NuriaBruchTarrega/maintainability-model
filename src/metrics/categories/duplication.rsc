@@ -22,8 +22,8 @@ set[tuple[loc, loc]] findDuplicates(Files files) {
 }
 
 int calculateDuplicationPercentage(map[loc locations, list[str] lines] files, set[tuple[loc, loc]] duplicates) {
-	duplicateAmount = size(duplicates);
-	totalLinesOfCode = size([line | line <- ([linesPerLocation | linesPerLocation <- lines])]);
+	int duplicateAmount = size(duplicates);
+	int totalLinesOfCode = size([line | line <- ([linesPerLocation | linesPerLocation <- files.lines])]);
 	return duplicateAmount / totalLinesOfCode * 100;
 }
 

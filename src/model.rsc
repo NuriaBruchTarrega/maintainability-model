@@ -37,7 +37,7 @@ void calculate(list[loc] projectLocations) {
 	println("\nSIG Maintainability Reports:\n");
 
 	for (projectLocation <- projectLocations) {
-		before = systemTime();
+		before = realTime();
 	
 		M3 projectModel = createM3Model(projectLocation);
 		map[loc locations, list[str] lines] files = retrieveProjectFiles(projectModel);
@@ -69,7 +69,7 @@ void calculate(list[loc] projectLocations) {
 			'**************************************************
 		");
 		
-		println("This analysis took <round((systemTime() - before) / 1e+9)> seconds to calculate");
+		println("This analysis took <round((realTime() - before) / 1000)> seconds to calculate");
 	}
 }
 
