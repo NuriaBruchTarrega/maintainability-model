@@ -60,6 +60,8 @@ void calculate(list[loc] projectLocations) {
 			'-----------------------------------------------
 			'
 			'Average Rank: <convertRankToLiteral(calculateAverageRank([volume[1], unitComplexity[1], duplication[1], unitSize[1], docstringDensity[1]]))>
+			'
+			'Maintainability Aspects: <calculateAnalysabilityAspectRanks(volume[1], unitComplexity[1], duplication[1], unitSize[1])>
 			'**************************************************
 		");
 	}
