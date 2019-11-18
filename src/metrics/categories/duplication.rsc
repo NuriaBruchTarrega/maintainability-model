@@ -68,14 +68,17 @@ set[tuple[loc, loc]] calculateDuplicatedBlocks(map[tuple[loc, str] lines, str _]
 	map[str, set[tuple[loc, str]]] buckets = (bucket : inverse[bucket] | bucket <- inverse, size(inverse[bucket]) > 1);
 	map[str, set[tuple[loc, str]]] linesByFile = generateLinesByFile(buckets);
 	
+	int i = 0;
 	for (bucket <- buckets) {		
+		i += 1;
+		println("N Buckets: <i> / <size(buckets)>");
 		set[tuple[loc location, str content]] linesInBucket = buckets[bucket];
 		
 		tuple[loc _, str content] lineFromBucket = getOneFrom(linesInBucket);
 		if (isCommonLineOfCode(lineFromBucket.content)) continue;
 		
 		while(size(linesInBucket) > 1) {
-			println("DUplicated blocks location: <duplicatedBlocksLocation>\n <size(duplicatedBlocksLocation)>");
+			println("DUplicated blocks location: <size(duplicatedBlocksLocation)>");
 			
 			tuple[tuple[loc, str] line, set[tuple[loc, str]] matches] takeOne = takeOneFrom(linesInBucket);
 			tuple[loc location, str content] currentLine = takeOne.line;
@@ -137,7 +140,7 @@ tuple[loc, loc, list[str]] matchConsecutive(bool matchingPrevious, tuple[loc loc
 	loc locationMatch = match.location;
 	list[str] block = [];
 	
-	while (locationCurrent.begin.line > 0) {
+	while (true) {
 		// Find consecutives of both blocks
 		tuple[loc location, str line] consecutive1 = findConsecutive(matchingPrevious, locationCurrent, currentFileLines);
 		tuple[loc location, str line] consecutive2 = findConsecutive(matchingPrevious, locationMatch, matchedFileLines);
@@ -159,7 +162,8 @@ tuple[loc, str] findConsecutive(bool matchingPrevious, loc currentLoc, set[tuple
 	str path = currentLoc.path;
 	str file = currentLoc.file;
 	
-	// If it is matching previous line, lineIndex = currentLoc.begin.line - 1
+	// If it is matching previous line, use begin line
+	// Otherwise, use end line
 	int lineIndex;
 	if (matchingPrevious) lineIndex = currentLoc.begin.line - 1;
 	else lineIndex = currentLoc.end.line + 1;
