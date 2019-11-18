@@ -34,7 +34,7 @@ map[tuple[loc, str], str] calculateLineHashes(map[loc locations, list[str] _] fi
 		int offset = 0;
 		int lineIndex = 1;
 		for (str line <- lines) {
-			if (isBlank(line) || isComment(line)) {
+			if (isComment(line)) {
 				offset += size(line) + 2;
 				lineIndex += 1;
 				continue;
@@ -64,12 +64,19 @@ map[tuple[loc, str], str] calculateLineHashes(map[loc locations, list[str] _] fi
 
 set[tuple[loc, loc]] calculateDuplicatedBlocks(map[tuple[loc, str] lines, str _] lineHashes) {
 	set[tuple[loc, loc]] duplicatedBlocksLocation = {};
-	buckets = invert(lineHashes);
+	inverse = invert(lineHashes);
+	map[str, set[tuple[loc, str]]] buckets = (bucket : inverse[bucket] | bucket <- inverse, size(inverse[bucket]) > 1);
+	map[str, set[tuple[loc, str]]] linesByFile = generateLinesByFile(buckets);
 	
-	for (bucket <- buckets) {
+	for (bucket <- buckets) {		
 		set[tuple[loc location, str content]] linesInBucket = buckets[bucket];
 		
+		tuple[loc _, str content] lineFromBucket = getOneFrom(linesInBucket);
+		if (isCommonLineOfCode(lineFromBucket.content)) continue;
+		
 		while(size(linesInBucket) > 1) {
+			println("DUplicated blocks location: <duplicatedBlocksLocation>\n <size(duplicatedBlocksLocation)>");
+			
 			tuple[tuple[loc, str] line, set[tuple[loc, str]] matches] takeOne = takeOneFrom(linesInBucket);
 			tuple[loc location, str content] currentLine = takeOne.line;
 			linesInBucket = takeOne.matches;
@@ -79,8 +86,8 @@ set[tuple[loc, loc]] calculateDuplicatedBlocks(map[tuple[loc, str] lines, str _]
 				if (match.content != currentLine.content) continue;
 				
 				// Get all duplicated lines previous and posterior
-				tuple[loc block1Loc, loc block2Loc, list[str] block]  matchedPrevious = matchConsecutive(true, currentLine, match, lineHashes.lines);
-				tuple[loc block1Loc, loc block2Loc, list[str] block]  matchedPosterior = matchConsecutive(false, currentLine, match, lineHashes.lines);
+				tuple[loc block1Loc, loc block2Loc, list[str] block]  matchedPrevious = matchConsecutive(true, currentLine, match, linesByFile[getPathFile(currentLine.location)], linesByFile[getPathFile(match.location)]);
+				tuple[loc block1Loc, loc block2Loc, list[str] block]  matchedPosterior = matchConsecutive(false, currentLine, match, linesByFile[getPathFile(currentLine.location)], linesByFile[getPathFile(match.location)]);
 				
 				// Check duplicated block size is greater or equal to 6
 				list[str] block = matchedPrevious.block + currentLine.content + matchedPosterior.block;
@@ -99,23 +106,41 @@ set[tuple[loc, loc]] calculateDuplicatedBlocks(map[tuple[loc, str] lines, str _]
 	return duplicatedBlocksLocation;
 }
 
+map[str, set[tuple[loc, str]]] generateLinesByFile(map[str, set[tuple[loc, str]]] buckets) {
+	map[str, set[tuple[loc, str]]] linesByFile = ();
+	
+	for (bucket <- buckets) {
+		set[tuple[loc, str]] linesInBucket = buckets[bucket];
+		
+		for (tuple[loc location, str content] line <- linesInBucket) {
+			if(getPathFile(line.location) in linesByFile) linesByFile[getPathFile(line.location)] += line;
+			else linesByFile = linesByFile + (getPathFile(line.location):{line});
+		}
+	}
+	return linesByFile;
+}
+
+str getPathFile(loc location) {
+	return location.path + location.file;
+}
+
 loc constructBlockLocation(loc locationPrevious, loc locationPosterior, loc locationCurrent) {
-	locationPrevious.length = locationPrevious.length + locationPosterior.length - locationCurrent.length;
+	locationPrevious.length = locationPrevious.length + locationPosterior.length - locationCurrent.length - 1;
 	locationPrevious.end.line = locationPosterior.end.line;
 	locationPrevious.end.column = locationPosterior.end.column;
 	
 	return locationPrevious;
 }
 
-tuple[loc, loc, list[str]] matchConsecutive(bool matchingPrevious, tuple[loc location, str line] currentLine, tuple[loc location, str line] match, set[tuple[loc, str]] hashedLines) {
+tuple[loc, loc, list[str]] matchConsecutive(bool matchingPrevious, tuple[loc location, str line] currentLine, tuple[loc location, str line] match,  set[tuple[loc, str]] currentFileLines,  set[tuple[loc, str]] matchedFileLines) {
 	loc locationCurrent = currentLine.location;
 	loc locationMatch = match.location;
 	list[str] block = [];
 	
 	while (locationCurrent.begin.line > 0) {
 		// Find consecutives of both blocks
-		tuple[loc location, str line] consecutive1 = findConsecutive(matchingPrevious, locationCurrent, hashedLines);
-		tuple[loc location, str line] consecutive2 = findConsecutive(matchingPrevious, locationMatch, hashedLines);
+		tuple[loc location, str line] consecutive1 = findConsecutive(matchingPrevious, locationCurrent, currentFileLines);
+		tuple[loc location, str line] consecutive2 = findConsecutive(matchingPrevious, locationMatch, matchedFileLines);
 		
 		// If there is no consecutive line or the lines do not match, done
 		if (consecutive1.line == "" || consecutive2.line == "") break;
@@ -162,7 +187,7 @@ loc constructLocation(bool matchingPrevious, loc current, loc consecutive) {
 		last = consecutive;
 	}
 	
-	first.length = first.length + last.length;
+	first.length = first.length + last.length + 1;
 	first.end.line = last.end.line;
 	first.end.column = last.end.column;
 	

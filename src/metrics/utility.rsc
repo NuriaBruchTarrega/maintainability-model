@@ -12,6 +12,8 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
 
+set[str] commonLinesOfCode = {"}", "return;", "try{", "try {","return true;", "return false;", "break;", "}else{", "} else {", "default:", "", "throw", "import"};
+
 bool isBlank(str line) {
 	trimmed = trim(line);
 	return size(trimmed) == 0;
@@ -21,6 +23,14 @@ bool isBlank(str line) {
 bool isComment(str line) {
 	trimmed = trim(line);
 	return startsWith(trimmed, "//") || startsWith(trimmed, "/*") || startsWith(trimmed, "*");
+}
+
+bool isCommonLineOfCode(str line) {
+	for (commonLineOfCode <- commonLinesOfCode) {
+		if (contains(commonLineOfCode, line)) return true;
+	}
+	
+	return false;
 }
 
 list[str] retrieveMethodLines(loc methodLocation) {
