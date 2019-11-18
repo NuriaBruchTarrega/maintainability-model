@@ -6,6 +6,7 @@ import Set;
 import List;
 import Map;
 import util::Math;
+import util::Benchmark;
 import lang::java::m3::Core;
 import lang::java::m3::AST;
 import lang::java::jdt::m3::Core;
@@ -36,6 +37,8 @@ void calculate(list[loc] projectLocations) {
 	println("\nSIG Maintainability Reports:\n");
 
 	for (projectLocation <- projectLocations) {
+		before = realTime();
+	
 		M3 projectModel = createM3Model(projectLocation);
 		map[loc locations, list[str] lines] files = retrieveProjectFiles(projectModel);
 		list[Declaration] ast = retrieveAst(projectModel);
@@ -65,6 +68,8 @@ void calculate(list[loc] projectLocations) {
 			'Maintainability Aspects: <calculateAnalysabilityAspectRanks(volume[1], unitComplexity[1], duplication[1], unitSize[1])>
 			'**************************************************
 		");
+		
+		println("This analysis took <round((realTime() - before) / 1000)> seconds to calculate");
 	}
 }
 

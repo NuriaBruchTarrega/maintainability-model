@@ -21,8 +21,10 @@ set[tuple[loc, loc]] findDuplicates(Files files) {
 	return calculateDuplicatedBlocks(lineHashes);
 }
 
-int calculateDuplicationPercentage() {
-	return 0;
+int calculateDuplicationPercentage(map[loc locations, list[str] lines] files, set[tuple[loc, loc]] duplicates) {
+	int duplicateAmount = size(duplicates);
+	int totalLinesOfCode = size([line | line <- ([linesPerLocation | linesPerLocation <- files.lines])]);
+	return duplicateAmount / totalLinesOfCode * 100;
 }
 
 map[tuple[loc, str], str] calculateLineHashes(map[loc locations, list[str] lines] files) {
@@ -78,8 +80,6 @@ set[tuple[loc, loc]] calculateDuplicatedBlocks(map[tuple[loc, str] lines, str _]
 		if (isCommonLineOfCode(lineFromBucket.content)) continue;
 		
 		while(size(linesInBucket) > 1) {
-			println("DUplicated blocks location: <size(duplicatedBlocksLocation)>");
-			
 			tuple[tuple[loc, str] line, set[tuple[loc, str]] matches] takeOne = takeOneFrom(linesInBucket);
 			tuple[loc location, str content] currentLine = takeOne.line;
 			linesInBucket = takeOne.matches;
