@@ -35,6 +35,10 @@ bool isCommonLineOfCode(str line) {
 	return false;
 }
 
+str getPathFile(loc location) {
+	return location.path + location.file;
+}
+
 list[str] retrieveMethodLines(loc methodLocation) {
 	return [line | line <- readFileLines(methodLocation), !isBlank(line), !isComment(line)];
 }

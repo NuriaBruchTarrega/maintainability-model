@@ -25,7 +25,7 @@ int calculateDuplicationPercentage() {
 	return 0;
 }
 
-map[tuple[loc, str], str] calculateLineHashes(map[loc locations, list[str] _] files) {
+map[tuple[loc, str], str] calculateLineHashes(map[loc locations, list[str] lines] files) {
 	map[tuple[loc, str], str] linesHashes = ();
 
 	for (loc location <- files.locations) {
