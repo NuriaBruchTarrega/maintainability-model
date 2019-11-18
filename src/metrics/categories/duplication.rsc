@@ -16,9 +16,9 @@ import metrics::utility;
 import utility;
 
 
-void findDuplicates(Files files) {
+set[tuple[loc, loc]] findDuplicates(Files files) {
 	map[tuple[loc, str], str] lineHashes = calculateLineHashes(files);
-		return linesHashes;
+	return calculateDuplicatedBlocks(lineHashes);
 }
 
 int calculateDuplicationPercentage() {
@@ -58,10 +58,12 @@ map[tuple[loc, str], str] calculateLineHashes(map[loc locations, list[str] _] fi
 			lineIndex += 1;
 		}
 	}
+	
+	return linesHashes;
 }
 
-set[loc] calculateDuplicatedBlocks(map[tuple[loc, str] lines, str _] lineHashes) {
-	set[loc] duplicatedBlocksLocation = {};
+set[tuple[loc, loc]] calculateDuplicatedBlocks(map[tuple[loc, str] lines, str _] lineHashes) {
+	set[tuple[loc, loc]] duplicatedBlocksLocation = {};
 	buckets = invert(lineHashes);
 	
 	for (bucket <- buckets) {
@@ -85,8 +87,11 @@ set[loc] calculateDuplicatedBlocks(map[tuple[loc, str] lines, str _] lineHashes)
 				if (size(block) < 6) continue;
 				
 				//  Add duplicated blocks location to set of duplicates
-				duplicatedBlocksLocation = duplicatedBlocksLocation + constructBlockLocation(matchedPrevious.block1Loc, matchedPosterior.block1Loc, currentLine.location);
-				duplicatedBlocksLocation = duplicatedBlocksLocation + constructBlockLocation(matchedPrevious.block2Loc, matchedPosterior.block2Loc, match.location);
+				loc blockLocation1 = constructBlockLocation(matchedPrevious.block1Loc, matchedPosterior.block1Loc, currentLine.location);
+				loc blockLocation2 = constructBlockLocation(matchedPrevious.block2Loc, matchedPosterior.block2Loc, match.location);
+				if (!(<blockLocation2, blockLocation1> in duplicatedBlocksLocation)) {
+					duplicatedBlocksLocation = duplicatedBlocksLocation + <blockLocation1, blockLocation2>;
+				}
 			}
 		}
 	}
