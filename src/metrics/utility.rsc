@@ -12,7 +12,7 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
 
-set[str] commonLinesOfCode = {"}", "return;", "try{", "try {","return true;", "return false;", "break;", "}else{", "} else {", "default:", "", "throw", "import"};
+set[str] commonLinesOfCode = {"}", "return;", "try{", "try {","return true;", "return false;", "break;", "}else{", "} else {", "default:", "", "throw", "import", "return null;"};
 
 bool isBlank(str line) {
 	trimmed = trim(line);
