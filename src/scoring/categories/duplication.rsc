@@ -7,6 +7,8 @@ import List;
 import Map;
 import util::Math;
 
+import scoring::ranks;
+
 
 // These bounds are taken from page 36 of the SIG model report
 tuple[int lower, int upper] PLUSPLUS_BOUNDS 	= <0, 3>;
