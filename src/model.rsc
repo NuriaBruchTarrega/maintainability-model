@@ -18,6 +18,7 @@ import scoring::categories::unitcomplexity;
 import scoring::categories::unitsize;
 import scoring::categories::volume;
 import scoring::ranks;
+import scoring::maintainabilityaspects;
 import utility;
 
 
