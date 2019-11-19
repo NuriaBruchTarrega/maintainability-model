@@ -48,9 +48,9 @@ tuple[tuple[int, int, int], Rank] calculateUnitComplexityMetric(list[Declaration
 	return calculateUnitComplexityRank(unitSizeRisks);
 }
 
-tuple[int, Rank] calculateDuplicationMetric(Files files) {
-	set[tuple[loc, loc]] duplicates = findDuplicates(files);
-	int duplicationPercentage = calculateDuplicationPercentage(files, duplicates);
+tuple[int, Rank] calculateDuplicationMetric(Files files, int volume) {
+	set[loc] duplicates = findDuplicates(files);
+	int duplicationPercentage = percent(size(duplicates), volume);
 	Rank rank = calculateDuplicationRank(duplicationPercentage);
 	return <duplicationPercentage, rank>;
 }
