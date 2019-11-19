@@ -16,6 +16,8 @@ tuple[int lower, int upper] NEUTRAL_BOUNDS 		= <30, 45>;
 tuple[int lower, int upper] MINUS_BOUNDS 		= <15, 30>;
 
 @doc{
+	Calulates the rank level of this metric.
+
 	Parameters:
 	- int densityPercentage: The percentage of units with a doc-string
 }

@@ -17,6 +17,8 @@ tuple[int lower, int upper] NEUTRAL_BOUNDS 		= <246000, 665000>;
 tuple[int lower, int upper] MINUS_BOUNDS 		= <665000, 1310000>;
 
 @doc{
+	Calulates the rank level of this metric.
+
 	Parameters:
 	- int volume: Lines of code (LOC)
 }

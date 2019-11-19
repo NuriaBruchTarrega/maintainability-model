@@ -18,6 +18,14 @@ import utility;
 
 str JAVADOC_STARTING_SEQUENCE = "/**";
 
+@doc{
+	Calculates the Docstring Density of a list of ASTs.
+
+	Parameters:
+	- list[Declaration] ast: A list of ASTs
+	
+	Return int: The Docstring Density
+}
 int calculateDocstringDensity(list[Declaration] ast) {
 	int docUnitAmount = 0;
 	int totalUnitAmount = 0;

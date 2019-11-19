@@ -15,10 +15,22 @@ import lang::java::jdt::m3::AST;
 import scoring::ranks;
 
 
+@doc{
+	Creates an M3 model of an Eclipse project.
+
+	Parameters:
+	- loc projectLocation: A location to an Eclipse project
+}
 M3 createM3Model(loc projectLocation) {
 	return createM3FromEclipseProject(projectLocation);
 }
 
+@doc{
+	Retrieves the actual files as location from an M3 model.
+
+	Parameters:
+	- M3 model: An M3 model
+}
 map[loc, list[str]] retrieveProjectFiles(M3 model) {
 	map[loc, list[str]] files = ();
 	for (m <- model.containment, m[0].scheme == "java+compilationUnit") {
@@ -27,6 +39,12 @@ map[loc, list[str]] retrieveProjectFiles(M3 model) {
 	return files;
 }
 
+@doc{
+	Retrieves the ASTs from an M3 model.
+
+	Parameters:
+	- M3 model: An M3 model
+}
 list[Declaration] retrieveAst(M3 model) {
 	list[Declaration] ast = [];
 	for (m <- model.containment, m[0].scheme == "java+compilationUnit") {
@@ -35,6 +53,13 @@ list[Declaration] retrieveAst(M3 model) {
 	return ast;
 }
 
+@doc{
+	Fills up a passed string with spaces until the specified length.
+
+	Parameters:
+	- str string: The original string
+	- int amount: The amount of spaces that the total length should be
+}
 str fillUp(str string, int amount) {
 	iterations = amount - size(string);
 	if (iterations <= 0) return string;
@@ -42,24 +67,46 @@ str fillUp(str string, int amount) {
 	return string;
 }
 
+@doc{
+	The overloaded version of `str fillUp(str string, int amount)` with different parameters.
+}
 str fillUp(int score, int amount) {
 	return fillUp(toString(score), amount);
 }
 
+@doc{
+	The overloaded version of `str fillUp(str string, int amount)` with different parameters.
+}
 str fillUp(tuple[int moderate, int high, int veryhigh] risks, int amount) {
 	return fillUp("<risks.moderate>% - <risks.high>% - <risks.veryhigh>%", amount);
 }
 
+@doc{
+	The overloaded version of `str fillUp(str string, int amount)` with different parameters.
+}
 str fillUp(Rank rank, int amount) {
 	return fillUp(convertRankToLiteral(rank), amount);
 }
 
+@doc{
+	Joins a list of strings together into a single one without a delimiter.
+
+	Parameters:
+	- list[str] listOfStrings: A list of strings to be joined
+}
 str joinString(list[str] listOfStrings) {
 	str joined = "";
 	for (item <- listOfStrings) joined += item;
 	return joined;
 }
 
+@doc{
+	Counts the occurrences of one string in another.
+
+	Parameters:
+	- str string: The original string
+	- str match: The string that is matched how often it occurs in the original one
+}
 int countOccurrences(str string, str match) {
 	return size(findAll(string, match));
 }

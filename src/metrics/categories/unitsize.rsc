@@ -15,6 +15,14 @@ import utility;
 import metrics::utility;
 
 
+@doc{
+	Calculates the Unit Sizes of a list of ASTs.
+
+	Parameters:
+	- list[Declaration] ast: A list of ASTs
+	
+	Return list[tuple[loc, int]]: A list of tuples of unit locations and their LOC.
+}
 list[tuple[loc, int]] calculateUnitSizes(list[Declaration] ast) {
 	list[tuple[loc, int]] unitSizes = [];
 	visit(ast) {

@@ -16,6 +16,14 @@ import metrics::utility;
 import utility;
 
 
+@doc{
+	Calculates the Unit Complexities of a list of ASTs.
+
+	Parameters:
+	- list[Declaration] ast: A list of ASTs
+	
+	Return list[tuple[loc, int, int]]: A list of tuples of unit locations, their LOC, and CC.
+}
 list[tuple[loc, int, int]] calculateUnitComplexities(list[Declaration] ast) {	
 	list[tuple[loc, int, int]] unitComplexities = [];
 	visit(ast) {

@@ -18,6 +18,8 @@ tuple[int moderate, int high, int veryHigh] NEUTRAL_BOUNDS 		= <40, 10, 0>;
 tuple[int moderate, int high, int veryHigh] MINUS_BOUNDS 		= <50, 15, 5>;
 
 @doc{
+	Calulates the rank level of this metric.
+
 	Parameters:
 	- tuple[int moderate, int high, int veryHigh] complexity: Percentage of LOC with moderate, high and very high risk levels.
 }
@@ -40,7 +42,9 @@ tuple[int lower, int upper] SIMPLE_BOUNDS 	= <1, 10>;
 tuple[int lower, int upper] MODERATE_BOUNDS = <11, 20>;
 tuple[int lower, int upper] HIGH_BOUNDS 	= <21, 50>;
 
-@doc{ 
+@doc{
+	Calulates the risk level of this metric.
+
 	Parameters:
 	- int cyclomaticComplexity: Cyclomatic complexity (CC) of the unit
 }

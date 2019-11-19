@@ -15,6 +15,14 @@ import aliases;
 import metrics::utility;
 
 
+@doc{
+	Calculates the Volume of a list of source code files.
+
+	Parameters:
+	- Files files: A list of files
+	
+	Return int: The volume of the passed files
+}
 int calculateVolume(map[loc locations, list[str] lines] files) {
 	int volume = 0;
 	for (lines <- files.lines) {

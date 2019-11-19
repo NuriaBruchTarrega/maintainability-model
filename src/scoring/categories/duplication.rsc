@@ -17,6 +17,8 @@ tuple[int lower, int upper] NEUTRAL_BOUNDS 		= <5, 10>;
 tuple[int lower, int upper] MINUS_BOUNDS 		= <10, 20>;
 
 @doc{
+	Calulates the rank level of this metric.
+
 	Parameters:
 	- int percentageDuplication: Percentage of duplication in a project
 }

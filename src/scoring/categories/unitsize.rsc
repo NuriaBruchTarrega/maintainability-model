@@ -18,8 +18,10 @@ tuple[int moderate, int high, int veryHigh] NEUTRAL_BOUNDS 		= <40, 10, 0>;
 tuple[int moderate, int high, int veryHigh] MINUS_BOUNDS 		= <50, 15, 5>;
 
 @doc{
+	Calulates the rank level of this metric.
+	
 	Parameters:
-	- tuple[int moderate, int high, int veryHigh] complexity: Percentage of LOC with moderate, high and very high risk levels.
+	- tuple[int moderate, int high, int veryHigh] unitSizeRisks: Percentage of LOC with moderate, high and very high risk levels.
 }
 tuple[tuple[int, int, int], Rank] calculateUnitSizeRank (tuple[int moderate, int high, int veryHigh] unitSizeRisks) {
 	if (unitSizeRisks.moderate >= MINUS_BOUNDS.moderate || unitSizeRisks.high >= MINUS_BOUNDS.high || unitSizeRisks.veryHigh >= MINUS_BOUNDS.veryHigh) {
@@ -41,6 +43,8 @@ tuple[int lower, int upper] MODERATE_BOUNDS = <10, 50>;
 tuple[int lower, int upper] HIGH_BOUNDS 	= <50, 100>;
 
 @doc{
+	Calulates the risk level of this metric.
+
 	Parameters:
 	- int unitSize: Lines of code (LOC) of the unit
 }
