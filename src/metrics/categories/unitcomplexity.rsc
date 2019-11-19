@@ -37,8 +37,12 @@ list[tuple[loc, int, int]] calculateUnitComplexities(list[Declaration] ast) {
 }
 
 @doc{
+	Calculates the cyclomatic complexity (CC) of a unit (i.e. method).
+
 	Parameters:
 	- Statement unit: A unit (i.e. method) of the source code
+	
+	Return int: The calculated cyclomatic complexity (CC)
 	
 	Author: Davy Landman
 	
