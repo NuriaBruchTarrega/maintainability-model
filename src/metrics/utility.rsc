@@ -12,7 +12,7 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
 
-set[str] commonLinesOfCode = {"}", "return", "try{", "try {", "break;", "}else{", "} else {", "default:", "throw", "if (t == null) {", "continue;"};
+set[str] commonLinesOfCode = {"}", "return", "try{", "try {", "break;", "}else{", "} else {", "default:", "throw", "continue;"};
 
 @doc{
 	A predicate that tests if a line is blank.

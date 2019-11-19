@@ -45,7 +45,7 @@ void calculate(list[loc] projectLocations) {
 		
 		volume = calculateVolumeMetric(files);	
 		unitComplexity = calculateUnitComplexityMetric(ast, volume[0]);
-		duplication = calculateDuplicationMetric(files);
+		duplication = calculateDuplicationMetric(files, volume[0]);
 		unitSize = calculateUnitSizeMetric(ast);
 		docstringDensity = calculateDocstringDensityMetric(ast);
 		
