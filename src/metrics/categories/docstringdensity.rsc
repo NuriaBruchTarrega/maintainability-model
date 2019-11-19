@@ -16,7 +16,7 @@ import metrics::utility;
 import utility;
 
 
-str JAVADOC_STARTING_SEQUENCE = "/*";
+str JAVADOC_STARTING_SEQUENCE = "/**";
 
 int calculateDocstringDensity(list[Declaration] ast) {
 	int docUnitAmount = 0;
@@ -32,4 +32,12 @@ int calculateDocstringDensity(list[Declaration] ast) {
 	}
 	
 	return percent(docUnitAmount, totalUnitAmount);
+}
+
+
+/* TESTS */
+
+test bool test_calculateDocstringDensity() {
+	ast = createAstFromFile(|project://sig-maintainability-model/testing/Example.java|, true);
+	return calculateDocstringDensity([ast]) == 25;
 }

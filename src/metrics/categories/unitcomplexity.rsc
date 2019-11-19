@@ -54,3 +54,16 @@ int calculateCyclomaticComplexityOfSingleUnit(Statement unit) {
     }
     return cc;
 }
+
+
+/* TESTS */
+
+test bool test_calculateUnitComplexities() {
+	ast = createAstFromFile(|project://sig-maintainability-model/testing/Example.java|, true);
+	list[tuple[loc, int, int]] unitComplexities = calculateUnitComplexities([ast]);
+	if (unitComplexities[0][2] != 1) return false;
+	if (unitComplexities[1][2] != 1) return false;
+	if (unitComplexities[2][2] != 2) return false;
+	if (unitComplexities[3][2] != 1) return false;
+	return true;
+}

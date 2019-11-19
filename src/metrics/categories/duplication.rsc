@@ -123,10 +123,6 @@ map[str, set[tuple[loc, str]]] generateLinesByFile(map[str, set[tuple[loc, str]]
 	return linesByFile;
 }
 
-str getPathFile(loc location) {
-	return location.path + location.file;
-}
-
 loc constructBlockLocation(loc locationPrevious, loc locationPosterior, loc locationCurrent) {
 	locationPrevious.length = locationPrevious.length + locationPosterior.length - locationCurrent.length - 1;
 	locationPrevious.end.line = locationPosterior.end.line;
@@ -201,4 +197,13 @@ loc constructLocation(bool matchingPrevious, loc current, loc consecutive) {
 list[str] constructBlock(bool matchingPrevious, list[str] current, str consecutive) {
 	if (matchingPrevious) return consecutive + current;
 	return current + consecutive;
+}
+
+
+/* TESTS */
+
+test bool test_findDuplicates() {
+	loc location = |project://sig-maintainability-model/testing/Example.java|;
+	Files files = (location: readFileLines(location));
+	return size(findDuplicates(files)) == 1;
 }

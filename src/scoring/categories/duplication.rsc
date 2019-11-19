@@ -21,7 +21,9 @@ tuple[int lower, int upper] MINUS_BOUNDS 		= <10, 20>;
 	- int percentageDuplication: Percentage of duplication in a project
 }
 Rank calculateDuplicationRank(int percentageDuplication) {
-	if (percentageDuplication >= PLUSPLUS_BOUNDS.lower && percentageDuplication < PLUSPLUS_BOUNDS.upper) {
+	if (percentageDuplication < PLUSPLUS_BOUNDS.lower) {
+		return Rank::\tbd();
+	} else if (percentageDuplication >= PLUSPLUS_BOUNDS.lower && percentageDuplication < PLUSPLUS_BOUNDS.upper) {
 		return \plusplus();
 	} else if (percentageDuplication >= PLUS_BOUNDS.lower && percentageDuplication < PLUS_BOUNDS.upper) {
 		return \plus();
@@ -32,4 +34,14 @@ Rank calculateDuplicationRank(int percentageDuplication) {
 	} else {
 		return \minusminus();
 	}
+}
+
+
+/* TESTS */
+
+test bool test_calculateDuplicationRank() {
+	if (calculateDuplicationRank(0) != \plusplus()) return false;
+	if (calculateDuplicationRank(-1) != Rank::\tbd()) return false;
+	if (calculateDuplicationRank(500) != \minusminus()) return false;
+	return true;
 }

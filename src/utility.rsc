@@ -36,7 +36,9 @@ list[Declaration] retrieveAst(M3 model) {
 }
 
 str fillUp(str string, int amount) {
-	for (_ <- [0..(amount - size(string))]) string += " ";
+	iterations = amount - size(string);
+	if (iterations <= 0) return string;
+	for (_ <- [0..iterations]) string += " ";
 	return string;
 }
 
@@ -64,3 +66,38 @@ int countOccurrences(str string, str match) {
 
 @javaClass{lib.java.Utility}
 public java str hashMD5(str input);
+
+
+/* TESTS */
+
+test bool test_fillUp() {
+	if (fillUp(" ", 0) != " ") return false;
+	if (fillUp("", 0) != "") return false;
+	if (fillUp("", 1) != " ") return false;
+	if (fillUp("hallo", 5) != "hallo") return false;
+	return true;
+}
+
+test bool test_joinString() {
+	if (joinString([" ", "\n", ""]) != " \n") return false;
+	if (joinString(["1", "2", "3"]) != "123") return false;
+	if (joinString(["ツ", " ツ ", "ツ"]) != "ツ ツ ツ") return false;
+	if (joinString(["TEST"]) != "TEST") return false;
+	return true;
+}
+
+test bool test_countOccurrences() {
+	if (countOccurrences("abracadabra", "a") != 5) return false;
+	if (countOccurrences("lel", "l") != 2) return false;
+	if (countOccurrences("ツ ツ ツ", "ツ") != 3) return false;
+	if (countOccurrences("TEST", "TEST") != 1) return false;
+	return true;
+}
+
+test bool test_hashMD5() {
+	if (hashMD5("") != "d41d8cd98f00b204e9800998ecf8427e") return false;
+	if (hashMD5(" ") != "7215ee9c7d9dc229d2921a40e899ec5f") return false;
+	if (hashMD5("ツ") != "c3b5e4de19d4111ae1d682b86e921671") return false;
+	if (hashMD5("TEST") != "033bd94b1168d7e4f0d644c3c95e35bf") return false;
+	return true;
+}

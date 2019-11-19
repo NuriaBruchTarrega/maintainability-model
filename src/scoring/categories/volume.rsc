@@ -21,7 +21,9 @@ tuple[int lower, int upper] MINUS_BOUNDS 		= <665000, 1310000>;
 	- int volume: Lines of code (LOC)
 }
 Rank calculateVolumeRank(int volume) {
-	if (volume >= PLUSPLUS_BOUNDS.lower && volume < PLUSPLUS_BOUNDS.upper) {
+	if (volume < PLUSPLUS_BOUNDS.lower) {
+		return Rank::\tbd();
+	} else if (volume >= PLUSPLUS_BOUNDS.lower && volume < PLUSPLUS_BOUNDS.upper) {
 		return \plusplus();
 	} else if (volume >= PLUS_BOUNDS.lower && volume < PLUS_BOUNDS.upper) {
 		return \plus();
@@ -32,4 +34,14 @@ Rank calculateVolumeRank(int volume) {
 	} else {
 		return \minusminus();
 	}
+}
+
+
+/* TESTS */
+
+test bool test_calculateVolumeRank() {
+	if (calculateVolumeRank(-1) != RiskLevel::\tbd()) return false;
+	if (calculateVolumeRank(210000) != \plus()) return false;
+	if (calculateVolumeRank(13100000) != \minusminus()) return false;
+	return true;
 }

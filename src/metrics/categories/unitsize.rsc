@@ -25,3 +25,16 @@ list[tuple[loc, int]] calculateUnitSizes(list[Declaration] ast) {
 	}
 	return unitSizes;
 }
+
+
+/* TESTS */
+
+test bool test_calculateUnitSizes() {
+	ast = createAstFromFile(|project://sig-maintainability-model/testing/Example.java|, true);
+	list[tuple[loc, int]] unitSizes = calculateUnitSizes([ast]);
+	if (unitSizes[0][1] != 3) return false;
+	if (unitSizes[1][1] != 3) return false;
+	if (unitSizes[2][1] != 10) return false;
+	if (unitSizes[3][1] != 9) return false;
+	return true;
+}

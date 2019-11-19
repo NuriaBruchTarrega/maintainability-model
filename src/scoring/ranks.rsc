@@ -51,5 +51,6 @@ str convertRankToLiteral(Rank rank) {
 		case \minus(): 		return "-";
 		case \minusminus(): return "--";
 		case \tbd(): 		return "TBD";
+		default:			return "N/A";
 	}
 }

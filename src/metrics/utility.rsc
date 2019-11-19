@@ -29,10 +29,35 @@ bool isCommonLineOfCode(str line) {
 	for (commonLineOfCode <- commonLinesOfCode) {
 		if (contains(commonLineOfCode, line)) return true;
 	}
-	
 	return false;
 }
 
 list[str] retrieveMethodLines(loc methodLocation) {
 	return [line | line <- readFileLines(methodLocation), !isBlank(line), !isComment(line)];
+}
+
+str getPathFile(loc location) {
+	return location.path + location.file;
+}
+
+
+/* TESTS */
+
+test bool test_isBlank() {
+	if (isBlank("") != true) return false;
+	if (isBlank(" ") != false) return false;
+	if (isBlank("             ") != false) return false;
+	if (isBlank("\t") != false) return false;
+	if (isBlank("\n") != false) return false;
+	return true;
+}
+
+test bool test_isComment() {
+	if (isComment("// TEST") != true) return false;
+	if (isComment(" TEST") != false) return false;
+	if (isComment("TEST") != false) return false;
+	if (isComment("/* TEST") != true) return false;
+	if (isComment("/** TEST") != true) return false;
+	if (isComment("* TEST") != true) return false;
+	return true;
 }

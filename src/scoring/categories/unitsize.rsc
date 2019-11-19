@@ -55,3 +55,13 @@ RiskLevel calculateUnitSizeRisk(int unitSize) {
 		return \veryhigh();
 	}
 }
+
+
+/* TESTS */
+
+test bool test_calculateUnitComplexityRisk() {
+	if (calculateUnitComplexityRisk(-1) != RiskLevel::\tbd()) return false;
+	if (calculateUnitComplexityRisk(21) != \high()) return false;
+	if (calculateUnitComplexityRisk(500) != \veryhigh()) return false;
+	return true;
+}

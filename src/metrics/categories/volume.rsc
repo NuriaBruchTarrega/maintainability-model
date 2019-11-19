@@ -11,6 +11,7 @@ import lang::java::m3::AST;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
+import aliases;
 import metrics::utility;
 
 
@@ -22,4 +23,13 @@ int calculateVolume(map[loc locations, list[str] lines] files) {
 		}
 	}
 	return volume;
+}
+
+
+/* TESTS */
+
+test bool test_calculateVolume() {
+	loc location = |project://sig-maintainability-model/testing/Example.java|;
+	Files files = (location: readFileLines(location));
+	return calculateVolume(files) == 28;
 }
