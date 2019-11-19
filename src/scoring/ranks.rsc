@@ -18,8 +18,12 @@ data Rank
     ;
 
 @doc{
+	Calculates the average of a given list of rank levels.
+
 	Parameters:
-	- Rank rank: A constructed rank type
+	- list[Rank] ranks: A list of constructed rank types
+	
+	Return: The average of the given ranks
 }
 Rank calculateAverageRank(list[Rank] ranks) {
 	list[int] rankValues = [];
@@ -43,6 +47,14 @@ Rank calculateAverageRank(list[Rank] ranks) {
 	}
 }
 
+@doc{
+	Converts a rank level to its string representation.
+
+	Parameters:
+	- Rank rank: A constructed rank type
+	
+	Return: The string literal of the given rank
+}
 str convertRankToLiteral(Rank rank) {
 	switch(rank) {
 		case \plusplus(): 	return "++";
@@ -51,5 +63,6 @@ str convertRankToLiteral(Rank rank) {
 		case \minus(): 		return "-";
 		case \minusminus(): return "--";
 		case \tbd(): 		return "TBD";
+		default:			return "N/A";
 	}
 }

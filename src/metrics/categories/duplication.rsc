@@ -167,3 +167,12 @@ loc findMatchConsecutive(bool matchingPrevious, loc locationMatch, str content, 
 	
 	return locationMatch;
 }
+
+
+/* TESTS */
+
+test bool test_findDuplicates() {
+	loc location = |project://sig-maintainability-model/testing/Example.java|;
+	Files files = (location: readFileLines(location));
+	return size(findDuplicates(files)) == 1;
+}

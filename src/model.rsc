@@ -58,14 +58,15 @@ void calculate(list[loc] projectLocations) {
 			'-----------------------------------------------
 			'| Volume            | <fillUp(volume[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(volume[1], RANK_FILL_UP_AMOUNT)> |
 			'| Unit Complexity   | <fillUp(unitComplexity[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(unitComplexity[1], RANK_FILL_UP_AMOUNT)> |
-			'| Duplication       | <fillUp(duplication[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(duplication[1], RANK_FILL_UP_AMOUNT)> |
+			'| Duplication       | <fillUp(toString(duplication[0]) + "%", SCORE_FILL_UP_AMOUNT)> | <fillUp(duplication[1], RANK_FILL_UP_AMOUNT)> |
 			'| Unit Size         | <fillUp(unitSize[0], SCORE_FILL_UP_AMOUNT)> | <fillUp(unitSize[1], RANK_FILL_UP_AMOUNT)> |
 			'| Docstring Density | <fillUp(toString(docstringDensity[0]) + "%", SCORE_FILL_UP_AMOUNT)> | <fillUp(docstringDensity[1], RANK_FILL_UP_AMOUNT)> |
 			'-----------------------------------------------
 			'
 			'Average Rank: <convertRankToLiteral(calculateAverageRank([volume[1], unitComplexity[1], duplication[1], unitSize[1], docstringDensity[1]]))>
 			'
-			'Maintainability Aspects: <calculateAnalysabilityAspectRanks(volume[1], unitComplexity[1], duplication[1], unitSize[1])>
+			'Maintainability Aspects:
+			'<constructMaintainabilityAspectPrintOut(volume[1], unitComplexity[1], duplication[1], unitSize[1])>
 			'**************************************************
 		");
 		
@@ -74,5 +75,5 @@ void calculate(list[loc] projectLocations) {
 }
 
 void main() {
-	calculate(projects);
+	calculate([hsqldb]);
 }

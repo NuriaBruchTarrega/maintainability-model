@@ -18,6 +18,8 @@ tuple[int moderate, int high, int veryHigh] NEUTRAL_BOUNDS 		= <40, 10, 0>;
 tuple[int moderate, int high, int veryHigh] MINUS_BOUNDS 		= <50, 15, 5>;
 
 @doc{
+	Calulates the rank level of this metric.
+
 	Parameters:
 	- tuple[int moderate, int high, int veryHigh] complexity: Percentage of LOC with moderate, high and very high risk levels.
 }
@@ -35,18 +37,21 @@ tuple[tuple[int, int, int], Rank] calculateUnitComplexityRank(tuple[int moderate
 	}
 }
 
-
 // These bounds are taken from page 35 of the SIG model report
 tuple[int lower, int upper] SIMPLE_BOUNDS 	= <1, 10>;
 tuple[int lower, int upper] MODERATE_BOUNDS = <11, 20>;
 tuple[int lower, int upper] HIGH_BOUNDS 	= <21, 50>;
 
-@doc{ 
+@doc{
+	Calulates the risk level of this metric.
+
 	Parameters:
 	- int cyclomaticComplexity: Cyclomatic complexity (CC) of the unit
 }
 RiskLevel calculateUnitComplexityRisk(int cyclomaticComplexity) {
-	if (cyclomaticComplexity >= SIMPLE_BOUNDS.lower && cyclomaticComplexity <= SIMPLE_BOUNDS.upper) {
+	if (cyclomaticComplexity < SIMPLE_BOUNDS.lower) {
+		return RiskLevel::\tbd();
+	} else if (cyclomaticComplexity >= SIMPLE_BOUNDS.lower && cyclomaticComplexity <= SIMPLE_BOUNDS.upper) {
 		return \simple();
 	} else if (cyclomaticComplexity >= MODERATE_BOUNDS.lower && cyclomaticComplexity <= MODERATE_BOUNDS.upper) {
 		return \moderate();
@@ -55,4 +60,14 @@ RiskLevel calculateUnitComplexityRisk(int cyclomaticComplexity) {
 	} else {
 		return \veryhigh();
 	}
+}
+
+
+/* TESTS */
+
+test bool test_calculateUnitComplexityRisk() {
+	if (calculateUnitComplexityRisk(-1) != RiskLevel::\tbd()) return false;
+	if (calculateUnitComplexityRisk(21) != \high()) return false;
+	if (calculateUnitComplexityRisk(500) != \veryhigh()) return false;
+	return true;
 }

@@ -10,12 +10,14 @@ import util::Math;
 import scoring::ranks;
 
 
-tuple[int lower, int upper] PLUSPLUS_BOUNDS 	= <80, 100>;
-tuple[int lower, int upper] PLUS_BOUNDS 		= <60, 80>;
-tuple[int lower, int upper] NEUTRAL_BOUNDS 		= <40, 60>;
-tuple[int lower, int upper] MINUS_BOUNDS 		= <20, 40>;
+tuple[int lower, int upper] PLUSPLUS_BOUNDS 	= <60, 100>;
+tuple[int lower, int upper] PLUS_BOUNDS 		= <45, 60>;
+tuple[int lower, int upper] NEUTRAL_BOUNDS 		= <30, 45>;
+tuple[int lower, int upper] MINUS_BOUNDS 		= <15, 30>;
 
 @doc{
+	Calulates the rank level of this metric.
+
 	Parameters:
 	- int densityPercentage: The percentage of units with a doc-string
 }
@@ -31,4 +33,14 @@ Rank calculateDocstringDensityRank(int densityPercentage) {
 	} else {
 		return \minusminus();
 	}
+}
+
+
+/* TESTS */
+
+test bool test_calculateDocstringDensityRank() {
+	if (test_calculateDocstringDensityRank(0) != \minusminus()) return false;
+	if (test_calculateDocstringDensityRank(-1) != \minusminus()) return false;
+	if (test_calculateDocstringDensityRank(500) != \plusplus()) return false;
+	return true;
 }

@@ -16,6 +16,14 @@ import metrics::utility;
 import utility;
 
 
+@doc{
+	Calculates the Unit Complexities of a list of ASTs.
+
+	Parameters:
+	- list[Declaration] ast: A list of ASTs
+	
+	Return list[tuple[loc, int, int]]: A list of tuples of unit locations, their LOC, and CC.
+}
 list[tuple[loc, int, int]] calculateUnitComplexities(list[Declaration] ast) {	
 	list[tuple[loc, int, int]] unitComplexities = [];
 	visit(ast) {
@@ -53,4 +61,17 @@ int calculateCyclomaticComplexityOfSingleUnit(Statement unit) {
         case \infix(_,"||",_): cc += 1;
     }
     return cc;
+}
+
+
+/* TESTS */
+
+test bool test_calculateUnitComplexities() {
+	ast = createAstFromFile(|project://sig-maintainability-model/testing/Example.java|, true);
+	list[tuple[loc, int, int]] unitComplexities = calculateUnitComplexities([ast]);
+	if (unitComplexities[0][2] != 1) return false;
+	if (unitComplexities[1][2] != 1) return false;
+	if (unitComplexities[2][2] != 2) return false;
+	if (unitComplexities[3][2] != 1) return false;
+	return true;
 }
