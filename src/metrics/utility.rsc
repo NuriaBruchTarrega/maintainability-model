@@ -12,7 +12,7 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
 
-set[str] commonLinesOfCode = {"}", "return;", "try{", "try {","return true;", "return false;", "break;", "}else{", "} else {", "default:", "", "throw", "import", "return null;"};
+set[str] commonLinesOfCode = {"}", "return", "try{", "try {", "break;", "}else{", "} else {", "default:", "throw", "if (t == null) {", "continue;"};
 
 bool isBlank(str line) {
 	trimmed = trim(line);
@@ -26,10 +26,16 @@ bool isComment(str line) {
 }
 
 bool isCommonLineOfCode(str line) {
+	if (isEmpty(line)) return true;
+	
 	for (commonLineOfCode <- commonLinesOfCode) {
-		if (contains(commonLineOfCode, line)) return true;
+		if (contains(line, commonLineOfCode)) return true;
 	}
 	return false;
+}
+
+str getPathFile(loc location) {
+	return location.path + location.file;
 }
 
 list[str] retrieveMethodLines(loc methodLocation) {
