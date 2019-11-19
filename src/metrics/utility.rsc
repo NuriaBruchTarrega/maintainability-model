@@ -36,7 +36,7 @@ bool isBlank(str line) {
 }
 bool isComment(str line) {
 	trimmed = trim(line);
-	return startsWith(trimmed, "//") || startsWith(trimmed, "/*") || startsWith(trimmed, "*");
+	return startsWith(trimmed, "//") || startsWith(trimmed, "/*") || startsWith(trimmed, "*") || endsWith(trimmed, "*/");
 }
 
 bool isCommonLineOfCode(str line) {
