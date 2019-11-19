@@ -93,6 +93,8 @@ str fillUp(Rank rank, int amount) {
 
 	Parameters:
 	- list[str] listOfStrings: A list of strings to be joined
+	
+	Return str: The joined string
 }
 str joinString(list[str] listOfStrings) {
 	str joined = "";
@@ -106,13 +108,127 @@ str joinString(list[str] listOfStrings) {
 	Parameters:
 	- str string: The original string
 	- str match: The string that is matched how often it occurs in the original one
+	
+	Return int: The number of occurrences
 }
 int countOccurrences(str string, str match) {
 	return size(findAll(string, match));
 }
 
-@javaClass{lib.java.Utility}
-public java str hashMD5(str input);
+@doc{
+	Renders the SIG logo as ASCII art.
+}
+str renderSIGLogo() {
+	return("
+		'
+		'    ,*******              ***********   
+		'   **********        ##    ***********   
+		'   ******          ####    *        *    
+		'   ******         #####                  
+		'   ********       #####                  
+		'     ********     #####          .....   
+		'        *****     #####          *****   
+		'                  #####          *****   
+		'                  #####          *****   
+		'   ******,,**     #####    ***********   
+		'   **********     #####    ***********   
+		'      ******      (((((    ******        
+        '
+	");
+}
+
+@doc{
+	Renders the category legend tables.
+}
+str renderCategoryLegendTables() {
+	return("
+		'**********************************************************************************
+		' Volume:
+		'
+		' Rank Levels:
+		' --------------------
+		' | Rank | KLOC      |
+		' --------------------
+		' | ++   | 0-66      |
+		' | +    | 66-246    |
+		' | o    | 246-665   |
+		' | --   | 655-1,310 |
+		' | -    | \>1,310    |
+		' --------------------
+		'
+		'
+		' Unit Complexity:
+		'
+		' Risk Levels:
+		' ------------------------------------------
+		' | CC    | Risk Evaluation                |
+		' ------------------------------------------
+		' | 1-10  | without much risk, simple risk |
+		' | 11-20 | more complex, moderate risk    |
+		' | 21-50 | complex, high risk             |
+		' | \>50   | untestable, very high risk     |
+		' ------------------------------------------
+		'
+		' Rank Levels (Maximum relative LOC):
+		' --------------------------------------
+		' | Rank | Moderate | High | Very High |
+		' --------------------------------------
+		' | ++   | 25%      | 0%   | 0%        |
+		' | +    | 30%      | 5%   | 0%        |
+		' | o    | 40%      | 10%  | 0%        |
+		' | --   | 50%      | 15%  | 5%        |
+		' | -    | –        | –    | –         |
+		' --------------------------------------
+		'
+		'
+		' Duplication:
+		'
+		' Rank Levels:
+		' ---------------------------------
+		' | Rank | Duplication Percentage |
+		' ---------------------------------
+		' | ++   | 0-3%                   |
+		' | +    | 3-5%                   |
+		' | o    | 5-10%                  |
+		' | --   | 10-20%                 |
+		' | -    | 20-100%                |
+		' ---------------------------------
+		'
+		'
+		' Unit Size:
+		'
+		' Risk Levels:
+		' ------------------------------------------
+		' | LOC   | Risk Evaluation                |
+		' ------------------------------------------
+		' | \>0    | without much risk, simple risk |
+		' | \>10   | more complex, moderate risk    |
+		' | \>50   | complex, high risk             |
+		' | \>100  | untestable, very high risk     |
+		' ------------------------------------------
+		'
+		' Rank Levels (Maximum relative LOC):
+		' --------------------------------------
+		' | Rank | Moderate | High | Very High |
+		' --------------------------------------
+		' | ++   | 25%      | 0%   | 0%        |
+		' | +    | 30%      | 5%   | 0%        |
+		' | o    | 40%      | 10%  | 0%        |
+		' | --   | 50%      | 15%  | 5%        |
+		' | -    | –        | –    | –         |
+		' --------------------------------------
+		'
+		' Maintainability Aspects (Simple Average):
+		' ----------------------------------------------------------------------
+		' | Aspects       | Volume | Unit Complexity | Duplication | Unit Size |
+		' ----------------------------------------------------------------------
+		' | Analysability |   X    |                 |      X      |     X     |
+		' | Changeability |        |        X        |      X      |           |
+		' | Testability   |        |        X        |             |     X     |
+		' ----------------------------------------------------------------------
+		'**********************************************************************************
+	");
+}
 
 
 /* TESTS */
@@ -138,13 +254,5 @@ test bool test_countOccurrences() {
 	if (countOccurrences("lel", "l") != 2) return false;
 	if (countOccurrences("ツ ツ ツ", "ツ") != 3) return false;
 	if (countOccurrences("TEST", "TEST") != 1) return false;
-	return true;
-}
-
-test bool test_hashMD5() {
-	if (hashMD5("") != "d41d8cd98f00b204e9800998ecf8427e") return false;
-	if (hashMD5(" ") != "7215ee9c7d9dc229d2921a40e899ec5f") return false;
-	if (hashMD5("ツ") != "c3b5e4de19d4111ae1d682b86e921671") return false;
-	if (hashMD5("TEST") != "033bd94b1168d7e4f0d644c3c95e35bf") return false;
 	return true;
 }

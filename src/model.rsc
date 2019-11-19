@@ -34,7 +34,9 @@ list[loc] projects = [smallsql, hsqldb];
 
 // Main functions
 void calculate(list[loc] projectLocations) {
-	println("\nSIG Maintainability Reports:\n");
+	println(renderSIGLogo());
+	println("Category legends:\n<renderCategoryLegendTables()>\n");
+	println("\nMaintainability Reports:\n");
 
 	for (projectLocation <- projectLocations) {
 		before = realTime();
@@ -67,13 +69,13 @@ void calculate(list[loc] projectLocations) {
 			'
 			'Maintainability Aspects:
 			'<constructMaintainabilityAspectPrintOut(volume[1], unitComplexity[1], duplication[1], unitSize[1])>
+			'
+			'This analysis took <round((realTime() - before) / 1000)> seconds to calculate.
 			'**************************************************
 		");
-		
-		println("This analysis took <round((realTime() - before) / 1000)> seconds to calculate");
 	}
 }
 
 void main() {
-	calculate([hsqldb]);
+	calculate(projects);
 }

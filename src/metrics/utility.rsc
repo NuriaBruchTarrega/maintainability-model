@@ -12,7 +12,7 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
 
-set[str] commonLinesOfCode = {"}", "return", "try{", "try {", "break;", "}else{", "} else {", "default:", "throw", "continue;"};
+set[str] COMMON_LINES_OF_CODE = {"}", "return", "try{", "try {", "break;", "}else{", "} else {", "default:", "throw", "continue;"};
 
 @doc{
 	A predicate that tests if a line is blank.
@@ -42,7 +42,7 @@ bool isComment(str line) {
 bool isCommonLineOfCode(str line) {
 	if (isEmpty(line)) return true;
 	
-	for (commonLineOfCode <- commonLinesOfCode) {
+	for (commonLineOfCode <- COMMON_LINES_OF_CODE) {
 		if (contains(line, commonLineOfCode)) return true;
 	}
 	return false;
