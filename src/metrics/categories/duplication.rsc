@@ -17,16 +17,12 @@ import utility;
 
 
 set[loc] findDuplicates(Files files) {
-	map[loc, str] lineHashes = calculateLineHashes(files);
-	return calculateDuplicatedBlocks(lineHashes);
+	map[loc, str] lines = constructLines(files);
+	return calculateDuplicatedBlocks(lines);
 }
 
-int calculateDuplicationPercentage(set[tuple[loc, loc]] duplicates) {
-	int duplicatedLOC = 0;
-}
-
-map[loc, str] calculateLineHashes(map[loc locations, list[str] lines] files) {
-	map[loc, str] linesHashes = ();
+map[loc, str] constructLines(map[loc locations, list[str] lines] files) {
+	map[loc, str] lineMap = ();
 
 	for (loc location <- files.locations) {
 		list[str] lines = files[location];
@@ -51,19 +47,19 @@ map[loc, str] calculateLineHashes(map[loc locations, list[str] lines] files) {
 			line = trim(line);
 			key = lineLocation;
 			
-			linesHashes[key] = line;
+			lineMap[key] = line;
 			
 			offset += lineLocation.length + 1;
 			lineIndex += 1;
 		}
 	}
 	
-	return linesHashes;
+	return lineMap;
 }
 
-set[loc] calculateDuplicatedBlocks(map[loc, str] lineHashes) {
+set[loc] calculateDuplicatedBlocks(map[loc, str] lines) {
 	set[loc] duplicatedLinesLocation = {};
-	inverse = invert(lineHashes);
+	inverse = invert(lines);
 	map[str, set[loc]] allRepeatedLines = (bucket : inverse[bucket] | bucket <- inverse, size(inverse[bucket]) > 1);
 	map[str, set[tuple[loc, str]]] linesByFile = generateLinesByFile(allRepeatedLines);
 	
@@ -77,8 +73,8 @@ set[loc] calculateDuplicatedBlocks(map[loc, str] lineHashes) {
 			
 			for (loc matchLine <- linesInBucket) {				
 				// Get all duplicated lines previous and posterior
-				set[loc]  matchedPrevious = matchConsecutive(true, currentLine, matchLine, linesByFile[getPathFile(currentLine)], allRepeatedLines);
-				set[loc]  matchedPosterior = matchConsecutive(false, currentLine, matchLine, linesByFile[getPathFile(currentLine)], allRepeatedLines);
+				set[loc] matchedPrevious = matchConsecutive(true, currentLine, matchLine, linesByFile[getPathFile(currentLine)], allRepeatedLines);
+				set[loc] matchedPosterior = matchConsecutive(false, currentLine, matchLine, linesByFile[getPathFile(currentLine)], allRepeatedLines);
 				
 				// Check duplicated block size is greater or equal to 6
 				int blockLOC = round(size(matchedPrevious)/2) + round(size(matchedPosterior)/2) + 1;

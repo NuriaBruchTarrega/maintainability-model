@@ -30,7 +30,7 @@ data MaintainabilityAspect
 }
 str constructMaintainabilityAspectPrintOut(Rank volumeRank, Rank unitComplexityRank, Rank duplicationRank, Rank unitSizeRank) {
 	map[MaintainabilityAspect aspects, Rank ranks] maintainabilityAspects = calculateAnalysabilityAspectRanks(volumeRank, unitComplexityRank, duplicationRank, unitSizeRank);
-	maintainabilityAspectPrintOut = "";
+	maintainabilityAspectPrintOut = "\n";
 	for (maintainabilityAspect <- maintainabilityAspects.aspects) {
 		rank = maintainabilityAspects[maintainabilityAspect];
 		maintainabilityAspectPrintOut += "<convertMaintainabilityAspectToLiteral(maintainabilityAspect)>: <convertRankToLiteral(rank)>\n";
