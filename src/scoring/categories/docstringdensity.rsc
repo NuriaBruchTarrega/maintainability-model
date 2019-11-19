@@ -10,10 +10,11 @@ import util::Math;
 import scoring::ranks;
 
 
-tuple[int lower, int upper] PLUSPLUS_BOUNDS 	= <60, 100>;
-tuple[int lower, int upper] PLUS_BOUNDS 		= <45, 60>;
-tuple[int lower, int upper] NEUTRAL_BOUNDS 		= <30, 45>;
-tuple[int lower, int upper] MINUS_BOUNDS 		= <15, 30>;
+// These bounds were obtained through a executed study of 10 large-scale Java projects
+tuple[int lower, int upper] PLUSPLUS_BOUNDS 	= <42, 100>;
+tuple[int lower, int upper] PLUS_BOUNDS 		= <31, 42>;
+tuple[int lower, int upper] NEUTRAL_BOUNDS 		= <16, 31>;
+tuple[int lower, int upper] MINUS_BOUNDS 		= <8, 16>;
 
 @doc{
 	Calulates the rank level of this metric.

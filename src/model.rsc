@@ -35,8 +35,8 @@ list[loc] projects = [smallsql, hsqldb];
 // Main functions
 void calculate(list[loc] projectLocations) {
 	println(renderSIGLogo());
-	println("Category legends:\n<renderCategoryLegendTables()>\n");
-	println("\nMaintainability Reports:\n");
+	println("Category Legends:\n<renderCategoryLegendTables()>\n");
+	println("\nMaintainability Reports:");
 
 	for (projectLocation <- projectLocations) {
 		before = realTime();
@@ -66,6 +66,7 @@ void calculate(list[loc] projectLocations) {
 			'-----------------------------------------------
 			'
 			'Average Rank: <convertRankToLiteral(calculateAverageRank([volume[1], unitComplexity[1], duplication[1], unitSize[1], docstringDensity[1]]))>
+			'
 			'
 			'Maintainability Aspects:
 			'<constructMaintainabilityAspectPrintOut(volume[1], unitComplexity[1], duplication[1], unitSize[1])>
